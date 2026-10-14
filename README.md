@@ -27,10 +27,20 @@ npx astro check    # type check
 | GitHub stats snapshot (used when no token is set) | `src/lib/github.ts` |
 | CVs | `public/cv/Louay-Barraq-CV-EN.pdf`, `public/cv/Louay-Barraq-CV-FR.pdf` |
 
-### Photo, banners and app icons
+### Project banners
 
-1. Put the files in `public/images/` (e.g. `public/images/louay.jpg`, `public/images/projects/fixtura.webp`, `public/images/apps/converti.png`).
-2. In `src/data/shared.ts` set `profile.photo`, a project's `banner`, or an app's `icon` to that path (e.g. `'/images/louay.jpg'`).
+Banners are generated from a template (`src/pages/banners/[id].astro`, dev only) and real app screenshots:
+
+1. Put screenshots in `src/assets/screenshots/<project-id>/`, named in order (`01-….png` is the main phone, then `02-…`, `03-…`).
+2. Add the project to `src/data/banners.ts` (accent color, window title, tech badges).
+3. With the dev server running (`npm run dev`), run `npm run banners` (or `npm run banners paycheck` for one). This writes `src/assets/banners/<id>.png`, which the project card picks up automatically, resized and converted to WebP at build time.
+
+Preview a banner at `http://localhost:4321/banners/<id>/`.
+
+### Photo and app icons
+
+1. Put the files in `public/images/` (e.g. `public/images/louay.jpg`, `public/images/apps/converti.png`).
+2. In `src/data/shared.ts` set `profile.photo` or an app's `icon` to that path (e.g. `'/images/louay.jpg'`).
 
 Until then, the placeholders from the design are shown.
 

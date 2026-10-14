@@ -5,4 +5,5 @@ import { defineConfig } from 'astro/config';
 // It is used for canonical and hreflang links.
 export default defineConfig({
   site: process.env.SITE_URL || undefined,
+  devToolbar: { enabled: false },
 });

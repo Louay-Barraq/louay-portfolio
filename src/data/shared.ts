@@ -28,8 +28,6 @@ export interface Project {
   status: ProjectStatus;
   repo: string;
   playUrl?: string;
-  // Put banners in public/images/projects/ and set e.g. '/images/projects/fixtura.webp'
-  banner?: string;
 }
 
 const gh = (repo: string) => `${profile.github}/${repo}`;
