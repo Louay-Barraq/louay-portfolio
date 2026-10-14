@@ -1,0 +1,41 @@
+---
+import Window from './Window.astro';
+import { profile } from '../data/shared';
+import { getGithubStats, monthsCovered, toWeeks } from '../lib/github';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const stats = await getGithubStats();
+const weeks = toWeeks(stats.days);
+const months = monthsCovered(stats.days).map((m) => t.activity.months[m]);
+---
+
+<Window file="activity.log">
+  <div class="activity">
+    <div class="activity-stats">
+      <div class="section-head" style="justify-content:flex-start;gap:12px">
+        <h2 class="h2">{t.activity.title}</h2>
+        <a href={profile.github} style="font-size:14px">{t.activity.onGithub} {t.arrow}</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>{stats.publicRepos}</strong><span>{t.activity.publicRepos}</span></div>
+        <div class="stat"><strong>{stats.commitsThisYear}</strong><span>{t.activity.commitsYear(stats.year)}</span></div>
+        <div class="stat"><strong>{stats.topLanguage}</strong><span>{t.activity.topLanguage}</span></div>
+      </div>
+    </div>
+    <div class="grid-wrap">
+      <div class="grid" role="img" aria-label={t.activity.gridLabel}>
+        {weeks.map((week) => (
+          <div class="week">
+            {week.map((d) => (d ? <span class={`cell l${d.level}`} title={`${d.date}: ${d.count}`} /> : <span class="cell empty" />))}
+          </div>
+        ))}
+      </div>
+      <div class="months">{months.map((m) => <span>{m}</span>)}</div>
+      <span class="grid-caption">{t.activity.recent(stats.recentCommits)}</span>
+    </div>
+  </div>
+</Window>

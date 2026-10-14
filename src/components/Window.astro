@@ -1,0 +1,18 @@
+---
+interface Props {
+  file?: string;
+  dots?: 'traffic' | 'plain';
+  class?: string;
+  id?: string;
+}
+const { file, dots, class: className, id } = Astro.props;
+---
+
+<section class:list={['win', className]} id={id}>
+  <div class="bar" aria-hidden="true">
+    {dots === 'traffic' && (<><span class="dot r" /><span class="dot y" /><span class="dot gr" /></>)}
+    {dots === 'plain' && (<><span class="dot" /><span class="dot" /><span class="dot" /></>)}
+    {file && <span class:list={[dots && 'file']}>{file}</span>}
+  </div>
+  <slot />
+</section>

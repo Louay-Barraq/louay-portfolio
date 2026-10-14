@@ -1,0 +1,39 @@
+---
+import Window from './Window.astro';
+import { profile } from '../data/shared';
+import type { Dict, Locale } from '../i18n';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t } = Astro.props;
+const photo = profile.photo;
+---
+
+<div class="hero" id="top">
+  <Window file="hello.txt" dots="traffic" class="hero-main">
+    <div class="hero-body">
+      <div class="hero-top">
+        <span class="hello"><span class="mono">&gt;</span> {t.hero.hello}</span>
+        <span class="chip available">{t.hero.available}</span>
+      </div>
+      <div class="photo-frame photo-inline">
+        {photo ? <img src={photo} alt={t.hero.photo} width="180" height="180" /> : <span>[ photo ]</span>}
+      </div>
+      <h1>{t.hero.name}</h1>
+      <p class="role">{t.hero.role}</p>
+      <p class="tagline">{t.hero.tagline}</p>
+      <div class="hero-actions">
+        <a href="#work" class="btn primary">{t.hero.seeProjects}</a>
+        <a href={profile.cv.en} class="btn" download>{t.hero.downloadCv} · EN</a>
+        <a href={profile.cv.fr} class="btn" download>{t.hero.downloadCv} · FR</a>
+      </div>
+    </div>
+  </Window>
+  <Window file="photo.png" class="hero-photo">
+    <div class="photo-frame">
+      {photo ? <img src={photo} alt={t.hero.photo} /> : <span>[ photo ]</span>}
+    </div>
+  </Window>
+</div>

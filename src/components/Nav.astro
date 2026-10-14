@@ -1,0 +1,51 @@
+---
+import { localeLabels, localePath, type Dict, type Locale } from '../i18n';
+import { locales } from '../i18n/types';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+const links = [
+  ['#work', t.nav.projects],
+  ['#about', t.nav.about],
+  ['#experience', t.nav.experience],
+  ['#skills', t.nav.skills],
+  ['#contact', t.nav.contact],
+];
+---
+
+<header class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top"><span class="mono g">&gt;</span> {locale === 'ar' ? t.hero.name : 'louay barraq'}<span class="mono g">_</span></a>
+    <nav class="nav-links" id="nav-links" aria-label="Main">
+      {links.map(([href, label], i) => <a href={href} class:list={[i === 0 && 'active']}>{label}</a>)}
+    </nav>
+    <div class="nav-right">
+      <div class="lang" aria-label={t.nav.language}>
+        {locales.map((l, i) => (
+          <>
+            {i > 0 && <span class="lang-sep" aria-hidden="true">·</span>}
+            <a href={localePath(l)} hreflang={l} lang={l} aria-current={l === locale ? 'page' : undefined}>{localeLabels[l]}</a>
+          </>
+        ))}
+      </div>
+      <button class="menu-btn" type="button" aria-label={t.nav.menu} aria-controls="nav-links" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const btn = nav.querySelector<HTMLButtonElement>('.menu-btn')!;
+  const toggle = (open: boolean) => {
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+  };
+  btn.addEventListener('click', () => toggle(!nav.classList.contains('open')));
+  nav.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => toggle(false)));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && toggle(false));
+</script>

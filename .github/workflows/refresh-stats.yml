@@ -1,0 +1,18 @@
+# Rebuilds the site on Vercel every day so the GitHub stats and contribution grid stay fresh.
+# Setup: Vercel → Project → Settings → Git → Deploy Hooks → create a hook for "main",
+# then add its URL to GitHub → repo → Settings → Secrets → Actions as VERCEL_DEPLOY_HOOK.
+name: Refresh GitHub stats
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  redeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deploy
+        run: |
+          if [ -z "${{ secrets.VERCEL_DEPLOY_HOOK }}" ]; then echo "VERCEL_DEPLOY_HOOK not set, skipping"; exit 0; fi
+          curl -fsS -X POST "${{ secrets.VERCEL_DEPLOY_HOOK }}"

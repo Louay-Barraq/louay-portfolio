@@ -1,0 +1,77 @@
+---
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/700.css';
+import '@fontsource/jetbrains-mono/800.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-sans-arabic/400.css';
+import '@fontsource/ibm-plex-sans-arabic/500.css';
+import '@fontsource/ibm-plex-sans-arabic/600.css';
+import '@fontsource/ibm-plex-sans-arabic/700.css';
+import '../styles/global.css';
+
+import Nav from '../components/Nav.astro';
+import Window from '../components/Window.astro';
+import Hero from '../components/Hero.astro';
+import Activity from '../components/Activity.astro';
+import Projects from '../components/Projects.astro';
+import Apps from '../components/Apps.astro';
+import Timeline from '../components/Timeline.astro';
+import Certifications from '../components/Certifications.astro';
+import TechStack from '../components/TechStack.astro';
+import Personal from '../components/Personal.astro';
+import Contact from '../components/Contact.astro';
+import { dicts, localePath, type Locale } from '../i18n';
+import { locales } from '../i18n/types';
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = dicts[locale];
+const site = Astro.site;
+const abs = (path: string) => (site ? new URL(path, site).href : path);
+---
+
+<!doctype html>
+<html lang={locale} dir={t.dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <meta name="theme-color" content="#0d1117" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {site && <link rel="canonical" href={abs(localePath(locale))} />}
+    {locales.map((l) => <link rel="alternate" hreflang={l} href={abs(localePath(l))} />)}
+    <link rel="alternate" hreflang="x-default" href={abs('/')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:locale" content={{ en: 'en_US', fr: 'fr_FR', ar: 'ar_TN' }[locale]} />
+    {site && <meta property="og:url" content={abs(localePath(locale))} />}
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <Nav t={t} locale={locale} />
+    <main class="container">
+      <Hero t={t} locale={locale} />
+      <Window file="about-me.txt" id="about" class="about">
+        <div class="win-body" style="gap:12px">
+          <h2 class="h2">{t.about.title}</h2>
+          <p>{t.about.body}</p>
+        </div>
+      </Window>
+      <Activity t={t} />
+      <Projects t={t} locale={locale} />
+      <Apps t={t} locale={locale} />
+      <Timeline t={t} />
+      <Certifications t={t} />
+      <TechStack t={t} />
+      <Personal t={t} />
+      <Contact t={t} />
+      <footer class="footer">{t.footer}</footer>
+    </main>
+  </body>
+</html>

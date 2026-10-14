@@ -1,0 +1,38 @@
+---
+import Window from './Window.astro';
+import { spokenLanguages } from '../data/shared';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<div class="small-row">
+  <Window file="languages">
+    <div class="small-body">
+      <h2 class="h2">{t.languages.title}</h2>
+      <div class="langs">
+        {spokenLanguages.map((l) => (
+          <div class="lang-card">
+            <div class="lang-top">
+              <span class="lang-native" lang={l.lang}>{l.native}</span>
+              <span class="lang-name">{t.languages.items[l.id].name}</span>
+            </div>
+            <span class={`chip tone-${l.tone}`}>{t.languages.items[l.id].level}</span>
+            {'verify' in l && <a href={l.verify} target="_blank" rel="noopener">{t.languages.verify} {t.arrow}</a>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </Window>
+  <Window file="off-screen">
+    <div class="small-body">
+      <h2 class="h2">{t.interests.title}</h2>
+      <ul class="interests" role="list" style="margin:0;padding:0;list-style:none">
+        {t.interests.items.map((i) => <li class="chip">{i}</li>)}
+      </ul>
+    </div>
+  </Window>
+</div>

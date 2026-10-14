@@ -1,0 +1,109 @@
+---
+import Window from './Window.astro';
+import { profile } from '../data/shared';
+import { getGithubStats } from '../lib/github';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+const { publicRepos } = await getGithubStats();
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+
+<Window file="contact" id="contact">
+  <div class="contact">
+    <div class="contact-grid">
+      <div class="contact-intro">
+        <h2>{t.contact.title}<span class="mono g">_</span></h2>
+        <p>{t.contact.subtitle}</p>
+        <a class="email-card" href={`mailto:${profile.email}`}>
+          <span class="ico big" style="background:#0e4429;color:#3fb950" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="M3 7l9 6 9-6" /></svg>
+          </span>
+          <span><span class="label">{t.contact.emailMe}</span><span class="addr">{profile.email}</span></span>
+        </a>
+      </div>
+
+      <form class="contact-form" id="contact-form" data-key={accessKey} data-email={profile.email} data-subject={t.contact.subject} data-sending={t.contact.sending} data-success={t.contact.success} data-error={t.contact.error}>
+        <label>{t.contact.name}<input type="text" name="name" placeholder={t.contact.namePh} required autocomplete="name" /></label>
+        <label>{t.contact.email}<input type="email" name="email" placeholder={t.contact.emailPh} required autocomplete="email" /></label>
+        <label>{t.contact.message}<textarea name="message" rows="4" placeholder={t.contact.messagePh} required></textarea></label>
+        <label class="honeypot" aria-hidden="true">Leave empty<input type="checkbox" name="botcheck" tabindex="-1" /></label>
+        <button type="submit" class="btn primary">{t.contact.send}</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span class="links-label">// {t.contact.findMe}</span>
+      <div class="socials">
+        <a class="social" href={profile.github} target="_blank" rel="noopener">
+          <span class="ico" style="background:#21262d;color:#f0f6fc" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z" /></svg>
+          </span>
+          <span class="social-text"><strong>GitHub</strong><span><bdi>@{profile.githubLogin}</bdi> · {t.contact.githubDetail(publicRepos)}</span></span>
+          <span class="m" aria-hidden="true">{t.arrow}</span>
+        </a>
+        <a class="social" href={profile.linkedin} target="_blank" rel="noopener">
+          <span class="ico" style="background:#0a66c2;color:#fff" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 110-4.13 2.06 2.06 0 010 4.13zM7.12 20.45H3.56V9h3.56v11.45z" /></svg>
+          </span>
+          <span class="social-text"><strong>LinkedIn</strong><span><bdi>{profile.linkedinHandle}</bdi> · {t.contact.linkedinDetail}</span></span>
+          <span class="m" aria-hidden="true">{t.arrow}</span>
+        </a>
+        <a class="social" href={profile.googlePlay} target="_blank" rel="noopener">
+          <span class="ico" style="background:#0e4429;color:#3fb950" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3.5v17l14-8.5z" /></svg>
+          </span>
+          <span class="social-text"><strong>Google Play</strong><span>{t.contact.playDetail}</span></span>
+          <span class="m" aria-hidden="true">{t.arrow}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Window>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = form.querySelector<HTMLParagraphElement>('.form-status')!;
+  const button = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+  const d = form.dataset;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    if (data.get('botcheck')) return;
+
+    // No Web3Forms key configured: fall back to the visitor's mail app.
+    if (!d.key) {
+      const body = `${data.get('message')}\n\n— ${data.get('name')} <${data.get('email')}>`;
+      location.href = `mailto:${d.email}?subject=${encodeURIComponent(d.subject!)}&body=${encodeURIComponent(body)}`;
+      return;
+    }
+
+    const label = button.textContent;
+    button.disabled = true;
+    button.textContent = d.sending!;
+    status.className = 'form-status';
+    status.textContent = '';
+    try {
+      data.append('access_key', d.key);
+      data.append('subject', d.subject!);
+      data.append('from_name', 'Portfolio');
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      const json = await res.json();
+      if (!json.success) throw new Error(json.message);
+      form.reset();
+      status.classList.add('ok');
+      status.textContent = d.success!;
+    } catch {
+      status.classList.add('err');
+      status.textContent = d.error!;
+    } finally {
+      button.disabled = false;
+      button.textContent = label;
+    }
+  });
+</script>

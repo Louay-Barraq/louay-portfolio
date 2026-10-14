@@ -1,0 +1,35 @@
+---
+import Window from './Window.astro';
+import { certs } from '../data/shared';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<Window file="certifications" id="certifications">
+  <div class="win-body">
+    <div class="section-head">
+      <h2 class="h2">{t.certs.title}</h2>
+      <span class="sub">{t.certs.subtitle}</span>
+    </div>
+    <div class="certs">
+      {certs.map((c) => (
+        <article class="cert">
+          <span class="cert-bar" style={`background:${c.color}`} aria-hidden="true" />
+          <div class="cert-main">
+            <div class="cert-head">
+              <span class="cert-org"><i style={`background:${c.color}`} aria-hidden="true" />{t.certs.items[c.id].org}</span>
+              <span class="cert-when">{t.certs.items[c.id].when}</span>
+            </div>
+            <h3><bdi>{c.name}</bdi></h3>
+            {c.detail && <span class="cert-detail"><bdi>{c.detail}</bdi></span>}
+          </div>
+          <a class="btn outline-green" href={c.url} target="_blank" rel="noopener">{t.certs.verify} {t.arrow}</a>
+        </article>
+      ))}
+    </div>
+  </div>
+</Window>

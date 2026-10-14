@@ -1,0 +1,40 @@
+---
+import Window from './Window.astro';
+import { projects } from '../data/shared';
+import type { Dict, Locale } from '../i18n';
+
+interface Props {
+  t: Dict;
+  locale: Locale;
+}
+const { t, locale } = Astro.props;
+---
+
+<section id="work" style="display:flex;flex-direction:column;gap:18px">
+  <h2 class="section-title"><span class="mono g">&gt;</span> {t.projects.title} <small>{t.projects.count(projects.length)}</small></h2>
+  <div class="cards">
+    {projects.map((p) => {
+      const name = locale === 'ar' && p.nameAr ? p.nameAr : p.name;
+      return (
+        <Window dots="plain" class="project">
+          <div class="banner">{p.banner ? <img src={p.banner} alt="" loading="lazy" /> : t.projects.banner(name)}</div>
+          <div class="project-body">
+            <div class="project-head">
+              <h3>{name}</h3>
+              <span class="year">{p.year}</span>
+            </div>
+            <p>{t.projects.desc[p.id]}</p>
+            <div class="project-foot">
+              <span>{t.projects.builtWith} <bdi>{p.stack}</bdi></span>
+              {p.status && <span class="chip warn">{t.projects.status[p.status]}</span>}
+            </div>
+            <div class="project-links">
+              <a href={p.repo}>{t.projects.code} {t.arrow}</a>
+              {p.playUrl && <a href={p.playUrl}>Google Play {t.arrow}</a>}
+            </div>
+          </div>
+        </Window>
+      );
+    })}
+  </div>
+</section>

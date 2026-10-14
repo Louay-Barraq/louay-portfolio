@@ -1,0 +1,38 @@
+---
+import Window from './Window.astro';
+import { stack } from '../data/shared';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<Window file="tech-stack" id="skills">
+  <div class="win-body" style="gap:22px">
+    <div class="section-head">
+      <h2 class="h2">{t.stack.title}</h2>
+      <span class="sub">{t.stack.subtitle}</span>
+    </div>
+    <div class="stack">
+      {stack.map((g) => (
+        <div class="stack-group">
+          <div class="stack-head">
+            <h3>{t.stack.groups[g.id].name}</h3>
+            <span>{t.stack.count(g.items.length)}</span>
+          </div>
+          <p class="stack-hint">{t.stack.groups[g.id].hint}</p>
+          <ul class="tiles" role="list" style="margin:0;padding:0;list-style:none">
+            {g.items.map((i) => (
+              <li class="tile">
+                <span class="badge" style={`background:${i.bg};color:${i.fg}`} aria-hidden="true">{i.ab}</span>
+                <bdi>{i.name}</bdi>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</Window>

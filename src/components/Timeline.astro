@@ -1,0 +1,38 @@
+---
+import Window from './Window.astro';
+import type { Dict } from '../i18n';
+
+interface Props {
+  t: Dict;
+}
+const { t } = Astro.props;
+---
+
+<div class="two-col" id="experience">
+  <Window file="experience">
+    <div class="timeline">
+      <h2 class="h2">{t.experience.title}</h2>
+      {t.experience.items.map((e) => (
+        <div class="tl-item">
+          <span class="tl-when">{e.when} · {e.where}</span>
+          <strong>{e.role}</strong>
+          <span class="tl-org">{e.org}</span>
+          <p class="tl-desc">{e.desc}</p>
+        </div>
+      ))}
+    </div>
+  </Window>
+  <Window file="education">
+    <div class="timeline">
+      <h2 class="h2">{t.education.title}</h2>
+      {t.education.items.map((e) => (
+        <div class="tl-item blue">
+          <span class="tl-when"><bdi>{e.when}</bdi></span>
+          <strong>{e.school}</strong>
+          <span class="tl-degree">{e.degree}</span>
+          <span class="tl-note">{e.note}</span>
+        </div>
+      ))}
+    </div>
+  </Window>
+</div>
