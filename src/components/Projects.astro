@@ -26,7 +26,7 @@ const bannerFor = (id: string) => bannerFiles[`../assets/banners/${id}.png`];
         <Window dots="plain" class="project">
           <div class="banner">
             {banner ? (
-              <Image src={banner} alt="" widths={[600, 900, 1200]} sizes="(max-width: 760px) 100vw, 580px" loading="lazy" />
+              <Image src={banner} alt={`${name}: app screenshots`} widths={[640, 960, 1280, 1600]} sizes="(max-width: 1180px) 100vw, 1130px" loading="lazy" />
             ) : (
               t.projects.banner(name)
             )}
@@ -39,11 +39,21 @@ const bannerFor = (id: string) => bannerFiles[`../assets/banners/${id}.png`];
             <p>{t.projects.desc[p.id]}</p>
             <div class="project-foot">
               <span>{t.projects.builtWith} <bdi>{p.stack}</bdi></span>
-              {p.status && <span class="chip warn">{t.projects.status[p.status]}</span>}
+              {p.status && <span class={`chip st st-${p.status}`}>{t.projects.status[p.status]}</span>}
             </div>
             <div class="project-links">
               <a href={p.repo}>{t.projects.code} {t.arrow}</a>
-              {p.playUrl && <a href={p.playUrl}>Google Play {t.arrow}</a>}
+              {p.playUrl && (
+                <a href={p.playUrl}>
+                  <svg class="play-ico" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 2.5 12 12 4 21.5Z" fill="#00a0ff" />
+                    <path d="M4 2.5 16.2 9.53 12 12Z" fill="#00e676" />
+                    <path d="M4 21.5 12 12l4.2 2.47Z" fill="#ff3a44" />
+                    <path d="M16.2 9.53 20.5 12l-4.3 2.47L12 12Z" fill="#ffd500" />
+                  </svg>
+                  Google Play {t.arrow}
+                </a>
+              )}
             </div>
           </div>
         </Window>

@@ -51,7 +51,16 @@ const abs = (path: string) => (site ? new URL(path, site).href : path);
     <meta property="og:description" content={t.meta.description} />
     <meta property="og:locale" content={{ en: 'en_US', fr: 'fr_FR', ar: 'ar_TN' }[locale]} />
     {site && <meta property="og:url" content={abs(localePath(locale))} />}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:site_name" content={t.hero.name} />
+    <meta property="og:image" content={abs('/og-image.png')} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${t.hero.name} — ${t.hero.role}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={abs('/og-image.png')} />
   </head>
   <body>
     <Nav t={t} locale={locale} />

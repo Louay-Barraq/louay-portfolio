@@ -7,10 +7,13 @@ interface Props {
   locale: Locale;
 }
 const { t, locale } = Astro.props;
+// Same order as the sections on the page; the active link follows the scroll position.
 const links = [
-  ['#work', t.nav.projects],
   ['#about', t.nav.about],
+  ['#work', t.nav.projects],
+  ['#apps', t.nav.apps],
   ['#experience', t.nav.experience],
+  ['#certifications', t.nav.certifications],
   ['#skills', t.nav.skills],
   ['#contact', t.nav.contact],
 ];
@@ -20,7 +23,7 @@ const links = [
   <div class="nav-inner">
     <a class="brand" href="#top"><span class="mono g">&gt;</span> {locale === 'ar' ? t.hero.name : 'louay barraq'}<span class="mono g">_</span></a>
     <nav class="nav-links" id="nav-links" aria-label="Main">
-      {links.map(([href, label], i) => <a href={href} class:list={[i === 0 && 'active']}>{label}</a>)}
+      {links.map(([href, label]) => <a href={href}>{label}</a>)}
     </nav>
     <div class="nav-right">
       <div class="lang" aria-label={t.nav.language}>
@@ -48,4 +51,26 @@ const links = [
   btn.addEventListener('click', () => toggle(!nav.classList.contains('open')));
   nav.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => toggle(false)));
   document.addEventListener('keydown', (e) => e.key === 'Escape' && toggle(false));
+
+  // Scroll spy: the active link is the last section whose top has passed the header.
+  const links = [...nav.querySelectorAll<HTMLAnchorElement>('.nav-links a')];
+  const sections = links
+    .map((a) => ({ a, el: document.querySelector<HTMLElement>(a.getAttribute('href')!) }))
+    .filter((x): x is { a: HTMLAnchorElement; el: HTMLElement } => !!x.el);
+  const update = () => {
+    const line = nav.offsetHeight + 40;
+    let current: HTMLAnchorElement | null = null;
+    for (const { a, el } of sections) if (el.getBoundingClientRect().top <= line) current = a;
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (atBottom && sections.length) current = sections[sections.length - 1].a;
+    for (const a of links) {
+      const on = a === current;
+      a.classList.toggle('active', on);
+      if (on) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    }
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 </script>

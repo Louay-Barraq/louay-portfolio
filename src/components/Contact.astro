@@ -54,8 +54,13 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
           <span class="m" aria-hidden="true">{t.arrow}</span>
         </a>
         <a class="social" href={profile.googlePlay} target="_blank" rel="noopener">
-          <span class="ico" style="background:#0e4429;color:#3fb950" aria-hidden="true">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3.5v17l14-8.5z" /></svg>
+          <span class="ico" style="background:#21262d" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 24 24">
+              <path d="M4 2.5 12 12 4 21.5Z" fill="#00a0ff" />
+              <path d="M4 2.5 16.2 9.53 12 12Z" fill="#00e676" />
+              <path d="M4 21.5 12 12l4.2 2.47Z" fill="#ff3a44" />
+              <path d="M16.2 9.53 20.5 12l-4.3 2.47L12 12Z" fill="#ffd500" />
+            </svg>
           </span>
           <span class="social-text"><strong>Google Play</strong><span>{t.contact.playDetail}</span></span>
           <span class="m" aria-hidden="true">{t.arrow}</span>

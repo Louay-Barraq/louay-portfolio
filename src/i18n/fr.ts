@@ -8,7 +8,7 @@ const fr: Dict = {
     description:
       'Portfolio de Louay Barraq, développeur mobile et full-stack basé en Tunisie : projets Flutter, Spring Boot et React, applications sur Google Play, disponible en freelance.',
   },
-  nav: { projects: 'Projets', about: 'À propos', experience: 'Expérience', skills: 'Compétences', contact: 'Contact', menu: 'Ouvrir le menu', language: 'Langue' },
+  nav: { about: 'À propos', projects: 'Projets', apps: 'Applis', experience: 'Expérience', certifications: 'Certifications', skills: 'Compétences', contact: 'Contact', menu: 'Ouvrir le menu', language: 'Langue' },
   hero: {
     hello: 'Bonjour, je suis',
     available: 'Disponible pour du freelance',

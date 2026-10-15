@@ -58,12 +58,12 @@ export interface App {
 }
 
 export const apps: App[] = [
-  { id: 'converti', name: 'Converti', status: 'live', url: 'https://play.google.com/store/apps/details?id=com.louaybarraq.converti' },
-  { id: 'paycheck', name: 'PayCheck', status: 'live', url: 'https://play.google.com/store/apps/details?id=com.louaybarraq.paycheck' },
-  { id: 'fixtura', name: 'Fixtura', status: 'closed' },
+  { id: 'converti', name: 'Converti', status: 'live', url: 'https://play.google.com/store/apps/details?id=com.louaybarraq.converti', icon: '/images/apps/converti.png' },
+  { id: 'paycheck', name: 'PayCheck', status: 'live', url: 'https://play.google.com/store/apps/details?id=com.louaybarraq.paycheck', icon: '/images/apps/paycheck.png' },
+  { id: 'fixtura', name: 'Fixtura', status: 'closed', icon: '/images/apps/fixtura.png' },
   { id: 'diwenek', name: 'Diwenek', nameAr: 'ديوانك', status: 'soon' },
   { id: 'monoledger', name: 'MonoLedger', status: 'soon' },
-  { id: 'khetmti', name: 'Khetmti', nameAr: 'ختمتي', status: 'soon' },
+  { id: 'khetmti', name: 'Khetmti', nameAr: 'ختمتي', status: 'soon', icon: '/images/apps/khetmti.png' },
 ];
 
 export interface Cert {

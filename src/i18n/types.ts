@@ -23,7 +23,7 @@ export interface Dict {
   dir: 'ltr' | 'rtl';
   arrow: string;
   meta: { title: string; description: string };
-  nav: { projects: string; about: string; experience: string; skills: string; contact: string; menu: string; language: string };
+  nav: { about: string; projects: string; apps: string; experience: string; certifications: string; skills: string; contact: string; menu: string; language: string };
   hero: { hello: string; available: string; name: string; role: string; tagline: string; seeProjects: string; downloadCv: string; photo: string };
   about: { title: string; body: string };
   activity: {
