@@ -51,7 +51,7 @@ h1, h2, h3, p { margin: 0; }
 .ltr { direction: ltr; unicode-bidi: isolate; }
 
 .container {
-  max-width: 1180px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 24px 24px 80px;
   display: flex;
@@ -114,7 +114,7 @@ html[dir='rtl'] .h2 { font-family: var(--arabic); font-size: 24px; }
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
 }
-.nav-inner { max-width: 1180px; margin: 0 auto; padding: 8px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.nav-inner { max-width: 1320px; margin: 0 auto; padding: 8px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .brand { font-family: var(--mono); font-weight: 700; color: var(--text); text-decoration: none; }
 html[dir='rtl'] .brand { font-family: var(--arabic); font-size: 17px; }
 .brand:hover { color: var(--text); }
@@ -177,7 +177,8 @@ html[dir='rtl'] .grid-caption { direction: rtl; }
 .section-title { font-family: var(--mono); font-size: 30px; font-weight: 700; }
 html[dir='rtl'] .section-title { font-family: var(--arabic); font-size: 32px; }
 .section-title small { font-size: 16px; font-weight: 400; color: var(--muted); }
-.cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 900px) { .cards { grid-template-columns: minmax(0, 1fr); } }
 .project { display: flex; flex-direction: column; }
 .banner { aspect-ratio: 10 / 3; display: flex; align-items: center; justify-content: center; color: var(--muted); border-bottom: 1px solid var(--line); font-size: 13px; overflow: hidden; }
 .banner img { width: 100%; height: 100%; object-fit: cover; }

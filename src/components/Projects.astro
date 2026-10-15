@@ -26,7 +26,7 @@ const bannerFor = (id: string) => bannerFiles[`../assets/banners/${id}.png`];
         <Window dots="plain" class="project">
           <div class="banner">
             {banner ? (
-              <Image src={banner} alt={`${name}: app screenshots`} widths={[640, 960, 1280, 1600]} sizes="(max-width: 1180px) 100vw, 1130px" loading="lazy" />
+              <Image src={banner} alt={`${name}: app screenshots`} widths={[640, 960, 1280, 1600]} sizes="(max-width: 900px) 100vw, 660px" loading="lazy" />
             ) : (
               t.projects.banner(name)
             )}
