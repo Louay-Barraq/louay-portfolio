@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import Window from './Window.astro';
 import { profile } from '../data/shared';
+import portrait from '../assets/photos/me-cropped.jpg';
 import type { Dict, Locale } from '../i18n';
 
 interface Props {
@@ -8,7 +10,6 @@ interface Props {
   locale: Locale;
 }
 const { t } = Astro.props;
-const photo = profile.photo;
 ---
 
 <div class="hero" id="top">
@@ -19,7 +20,7 @@ const photo = profile.photo;
         <span class="chip available">{t.hero.available}</span>
       </div>
       <div class="photo-frame photo-inline">
-        {photo ? <img src={photo} alt={t.hero.photo} width="180" height="180" /> : <span>[ photo ]</span>}
+        <Image src={portrait} alt={t.hero.photo} widths={[180, 360]} sizes="180px" loading="eager" />
       </div>
       <h1>{t.hero.name}</h1>
       <p class="role">{t.hero.role}</p>
@@ -31,9 +32,9 @@ const photo = profile.photo;
       </div>
     </div>
   </Window>
-  <Window file="photo.png" class="hero-photo">
+  <Window file="me.jpg" class="hero-photo">
     <div class="photo-frame">
-      {photo ? <img src={photo} alt={t.hero.photo} /> : <span>[ photo ]</span>}
+      <Image src={portrait} alt={t.hero.photo} widths={[480, 720, 1000]} sizes="(max-width: 760px) 100vw, 420px" loading="eager" />
     </div>
   </Window>
 </div>

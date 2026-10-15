@@ -9,8 +9,6 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/louay-barraq/',
   linkedinHandle: 'in/louay-barraq',
   googlePlay: 'https://play.google.com/store/apps/developer?id=Louay+Barraq',
-  // Put your photo in public/images/ and set the path, e.g. '/images/louay.jpg'
-  photo: null as string | null,
   cv: {
     en: '/cv/Louay-Barraq-CV-EN.pdf',
     fr: '/cv/Louay-Barraq-CV-FR.pdf',
