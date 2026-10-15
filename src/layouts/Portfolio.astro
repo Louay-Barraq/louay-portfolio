@@ -24,6 +24,7 @@ import Personal from '../components/Personal.astro';
 import Contact from '../components/Contact.astro';
 import { dicts, localePath, type Locale } from '../i18n';
 import { locales } from '../i18n/types';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   locale: Locale;
@@ -82,5 +83,6 @@ const abs = (path: string) => (site ? new URL(path, site).href : path);
       <Contact t={t} />
       <footer class="footer">{t.footer}</footer>
     </main>
+    <SpeedInsights />
   </body>
 </html>
