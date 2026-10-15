@@ -28,6 +28,8 @@ const shots = Object.entries(
 // Extra colors for tools that only appear on banners.
 const bannerOnly = [
   { name: 'Firestore', ab: 'Fs', bg: '#FFA000', fg: '#0d1117' },
+  { name: 'ESP32', ab: 'E3', bg: '#E7352C', fg: '#ffffff' },
+  { name: 'Gemini AI', ab: 'Gm', bg: '#4285F4', fg: '#ffffff' },
 ];
 const allTech = [...stack.flatMap((g) => g.items), ...bannerOnly];
 const tech = (cfg.tech ?? project.stack.split('·').map((s) => s.trim()))
@@ -35,6 +37,7 @@ const tech = (cfg.tech ?? project.stack.split('·').map((s) => s.trim()))
 
 // The first screenshot is the hero (middle, higher); the others sit lower, behind it.
 const slots = ['mid', 'right', 'left'];
+const frame = cfg.frame ?? 'phone';
 ---
 
 <!doctype html>
@@ -73,6 +76,17 @@ const slots = ['mid', 'right', 'left'];
       .phone.left { left: 0; top: 140px; z-index: 1; transform: rotate(-4deg); }
       .phone.right { left: 500px; top: 140px; z-index: 1; transform: rotate(4deg); }
       .phone.left img, .phone.right img { filter: brightness(0.85); }
+      .window {
+        position: absolute; width: 540px; border-radius: 12px; overflow: hidden;
+        background: #1c2128; border: 1px solid #3a424d;
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.6);
+      }
+      .window .bar { display: flex; gap: 7px; padding: 10px 12px; background: #161b22; border-bottom: 1px solid #30363d; }
+      .window .bar i { width: 11px; height: 11px; border-radius: 50%; background: #30363d; }
+      .window img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
+      .window.mid { left: 40px; top: 120px; z-index: 2; }
+      .window.right { left: 200px; top: 52px; z-index: 1; }
+      .window.right img { filter: brightness(0.7); }
     </style>
   </head>
   <body>
@@ -91,8 +105,11 @@ const slots = ['mid', 'right', 'left'];
         )}
       </div>
       <div class="phones">
-        {shots.map((img, i) => (
+        {frame === 'phone' && shots.map((img, i) => (
           <div class={`phone ${slots[i]}`}><img src={img.src} alt="" /></div>
+        ))}
+        {frame === 'window' && shots.slice(0, 2).map((img, i) => (
+          <div class={`window ${slots[i]}`}><div class="bar"><i /><i /><i /></div><img src={img.src} alt="" /></div>
         ))}
       </div>
     </div>
